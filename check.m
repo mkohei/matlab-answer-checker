@@ -1,33 +1,33 @@
 clear;
 
-% ƒtƒ@ƒCƒ‹–¼‚Æ‚©’è‹`
-ANSWER_FILE = 'correct.m';  % ³‰ğo—ÍƒvƒƒOƒ‰ƒ€ƒtƒ@ƒCƒ‹–¼
-DIR = 'files';              % ‰ğ“šƒvƒƒOƒ‰ƒ€ƒtƒ@ƒCƒ‹Ši”[ƒfƒBƒŒƒNƒgƒŠ
-OUTPUT = 'evaluaiton.csv';  % •]‰¿Œ‹‰Êo—Íƒtƒ@ƒCƒ‹–¼
+% ãƒ•ã‚¡ã‚¤ãƒ«åã¨ã‹å®šç¾©
+ANSWER_FILE = 'correct.m';  % æ­£è§£å‡ºåŠ›ãƒ—ãƒ­ã‚°ãƒ©ãƒ ãƒ•ã‚¡ã‚¤ãƒ«å
+DIR = 'files';              % è§£ç­”ãƒ—ãƒ­ã‚°ãƒ©ãƒ ãƒ•ã‚¡ã‚¤ãƒ«æ ¼ç´ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª
+OUTPUT = 'evaluaiton.csv';  % è©•ä¾¡çµæœå‡ºåŠ›ãƒ•ã‚¡ã‚¤ãƒ«å
 
-% ‰ñ“š‚Ìæ“¾
+% å›ç­”ã®å–å¾—
 run(ANSWER_FILE);
 answer = result;
 
-% ‰ğ“šƒvƒƒOƒ‰ƒ€‚Ìˆê——æ“¾
+% è§£ç­”ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã®ä¸€è¦§å–å¾—
 files = dir(strcat(DIR, '/*.m'));
 
-% •]‰¿Ši”[—p”z—ñ
+% è©•ä¾¡æ ¼ç´ç”¨é…åˆ—
 id = cell(length(files), 1);
 evaluation = zeros(length(files), 1);
 
 for n = 1:length(files)
     
-    % w’è‚µ‚½•Ï”ˆÈŠO‚ğíœ
+    % æŒ‡å®šã—ãŸå¤‰æ•°ä»¥å¤–ã‚’å‰Šé™¤
     clearvars -except DIR OUTPUT answer n files id evaluation
     
-    % ‰ğ“šƒvƒƒOƒ‰ƒ€‚ÌÀs
-    % TODO: ÀsƒGƒ‰[‚Ìƒnƒ“ƒhƒ‹‚Æ‚©
+    % è§£ç­”ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã®å®Ÿè¡Œ
+    % TODO: å®Ÿè¡Œæ™‚ã‚¨ãƒ©ãƒ¼ã®ãƒãƒ³ãƒ‰ãƒ«ã¨ã‹
     filename = strcat(DIR, '/', files(n).name);
     run(filename);
     
-    % ”äŠr(•]‰¿) -> ŠÖ”(evaluation.m“à‚É‹Lq)‚ğ—pˆÓ‚·‚é
-    % TODO: result‚É’l‚ª“ü‚Á‚Ä‚¢‚È‚¢‚Æ‚©
+    % æ¯”è¼ƒ(è©•ä¾¡) -> é–¢æ•°(evaluate.må†…ã«è¨˜è¿°)ã‚’ç”¨æ„ã™ã‚‹
+    % TODO: resultã«å€¤ãŒå…¥ã£ã¦ã„ãªã„ã¨ã‹
     id(n) = cellstr( files(n).name(1:end-2) );
     evaluation(n)  = evaluate(answer, result);
 end
