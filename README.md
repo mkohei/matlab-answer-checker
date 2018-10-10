@@ -1,6 +1,10 @@
 # matlab-answer-checker
 
-回答プログラム(*.m)の結果が正解しているかを評価するMatlabプログラム
+- `check.m` : 回答プログラム(*.m)の結果が正解しているかを評価するMatlabプログラム
+- `prepare.m` : 各userディレクトリから各kadaiディレクトリへコピーする
+```
+$ python prepare {path}
+```
 
 ## 構成
 
