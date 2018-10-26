@@ -48,6 +48,7 @@ def main():
             os.makedirs(dirname)
         with open("{}/{}".format(dirname, mfilename), 'w') as f:
             f.write(newcode)
+        print(mfilename)
 
 
 
