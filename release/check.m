@@ -2,99 +2,99 @@ function f_____ = check()
 
 clear;
 
-% è©•ä¾¡å®šç¾©
+% •]‰¿’è‹`
 NOT_FOUND_____ = -404;
 INTERNAL_ERROR_____ = -500;
 EVALUATE_ERROR_____ = -600;
 
-% ãƒ•ã‚¡ã‚¤ãƒ«åã¨ã‹å®šç¾©
-ANSWER_DIR_____ = 'correct';     % æ­£è§£å‡ºåŠ›ãƒ—ãƒ­ã‚°ãƒ©ãƒ æ ¼ç´ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªå
-LIST_____ = 'list.csv';          % æå‡ºæœŸå¾…å›ç­”è€…ã®IDãƒªã‚¹ãƒˆãƒ•ã‚¡ã‚¤ãƒ«å
-OUTPUT_____ = 'evaluaiton.csv';  % è©•ä¾¡çµæœå‡ºåŠ›ãƒ•ã‚¡ã‚¤ãƒ«å
-IMGS_____ = 'imgs';              % ãƒ†ã‚¹ãƒˆç”¨ç”»åƒã®æ ¼ç´ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª
-INPUT_IMG_NAME_____ = 'kut.jpg';      % ãƒ†ã‚¹ãƒˆæ™‚ã®ç”»åƒãƒ•ã‚¡ã‚¤ãƒ«å
+% ƒtƒ@ƒCƒ‹–¼‚Æ‚©’è‹`
+ANSWER_DIR_____ = 'correct';     % ³‰ğo—ÍƒvƒƒOƒ‰ƒ€Ši”[ƒfƒBƒŒƒNƒgƒŠ–¼
+LIST_____ = 'list.csv';          % ’ñoŠú‘Ò‰ñ“šÒ‚ÌIDƒŠƒXƒgƒtƒ@ƒCƒ‹–¼
+OUTPUT_____ = 'evaluaiton.csv';  % •]‰¿Œ‹‰Êo—Íƒtƒ@ƒCƒ‹–¼
+IMGS_____ = 'imgs';              % ƒeƒXƒg—p‰æ‘œ‚ÌŠi”[ƒfƒBƒŒƒNƒgƒŠ
+INPUT_IMG_NAME_____ = 'kut.jpg';      % ƒeƒXƒg‚Ì‰æ‘œƒtƒ@ƒCƒ‹–¼
 
-% èª²é¡Œã®å€‹æ•°ã‚’å–å¾—(ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®å­˜åœ¨ç¢ºèªã‹ã‚‰)
+% exception.log
+fileID_____ = fopen('exception.log', 'w');
+
+% ‰Û‘è‚ÌŒÂ”‚ğæ“¾(ƒfƒBƒŒƒNƒgƒŠ‚Ì‘¶İŠm”F‚©‚ç)
 kadai_num_____ = 0;
 while exist( sprintf('kadai%d', kadai_num_____+1), 'dir')
     kadai_num_____ = kadai_num_____+1;
 end
 
-% æœŸå¾…å›ç­”è€…IDã‚’å–å¾—
+% Šú‘Ò‰ñ“šÒID‚ğæ“¾
 ID_LIST_____ = csvread(LIST_____);
 id_____ = num2cell(ID_LIST_____);
 
-% ãƒ†ã‚¹ãƒˆç”»åƒãƒ‘ã‚¹ã‚’å–å¾—
-% TODO: JPGã ã‘ã«å¯¾å¿œ
+% ƒeƒXƒg‰æ‘œƒpƒX‚ğæ“¾
+% TODO: JPG‚¾‚¯‚É‘Î‰
 imgs_____ = dir( strcat(IMGS_____, '/*.jpg'));
 
-% è©•ä¾¡æ ¼ç´ç”¨é…åˆ—
+% •]‰¿Ši”[—p”z—ñ
 evaluation_____ = zeros(length(ID_LIST_____), kadai_num_____);
 
 % kadai loop
 for k_____ = 1:kadai_num_____
     kadai_name_____ = sprintf('kadai%d', k_____);
     
-    % èª²é¡Œå…¨ä½“(å…¨ãƒ†ã‚¹ãƒˆç”»åƒã‚’é€šã—ãŸ)è©•ä¾¡
+    % ‰Û‘è‘S‘Ì(‘SƒeƒXƒg‰æ‘œ‚ğ’Ê‚µ‚½)•]‰¿
     %kadai_evaluation_____ = 0;
     
     % test imgs loop
     for t_____ = 1:length(imgs_____)
         
-        % ãƒ†ã‚¹ãƒˆç”»åƒã®ç”¨æ„(ã‚³ãƒ”ãƒ¼)
+        % ƒeƒXƒg‰æ‘œ‚Ì—pˆÓ(ƒRƒs[)
         copyfile( sprintf('%s/%s', IMGS_____, imgs_____(t_____).name), sprintf('%s/%s', ANSWER_DIR_____, INPUT_IMG_NAME_____));
         copyfile( sprintf('%s/%s', IMGS_____, imgs_____(t_____).name), sprintf('%s/%s', kadai_name_____, INPUT_IMG_NAME_____));
         
-        % æ­£è§£ã®å–å¾—(æ­£è§£ã‚¹ã‚¯ãƒªãƒ—ãƒˆã®å®Ÿè¡Œ)
-        % æ­£è§£ã‚¹ã‚¯ãƒªãƒ—ãƒˆã®å®Ÿè¡Œã§ä¾‹å¤–ãŒå‡ºãŸå ´åˆã¯ä¿®æ­£ãŒçµ¶å¯¾å¿…è¦ãªã®ã§try-catchã—ãªã„
+        % ³‰ğ‚Ìæ“¾(³‰ğƒXƒNƒŠƒvƒg‚ÌÀs)
+        % ³‰ğƒXƒNƒŠƒvƒg‚ÌÀs‚Å—áŠO‚ªo‚½ê‡‚ÍC³‚ªâ‘Î•K—v‚È‚Ì‚Åtry-catch‚µ‚È‚¢
         run( sprintf('%s/%s.m', ANSWER_DIR_____, kadai_name_____));
         answer_____ = result;
 
         % id loop
         for n_____ = 1:length(ID_LIST_____)
 
-            % æŒ‡å®šã—ãŸå¤‰æ•°ä»¥å¤–ã‚’å‰Šé™¤
-            clearvars -except NOT_FOUND_____ INTERNAL_ERROR_____ EVALUATE_ERROR_____ ANSWER_DIR_____ LIST_____ OUTPUT_____ kadai_num_____ ID_LIST_____ id_____ evaluation_____ k_____ kadai_name_____ answer_____ n_____ INPUT_IMG_NAME_____ imgs_____ t_____ IMGS_____
+            % w’è‚µ‚½•Ï”ˆÈŠO‚ğíœ
+            clearvars -except NOT_FOUND_____ INTERNAL_ERROR_____ EVALUATE_ERROR_____ ANSWER_DIR_____ LIST_____ OUTPUT_____ kadai_num_____ ID_LIST_____ id_____ evaluation_____ k_____ kadai_name_____ answer_____ n_____ INPUT_IMG_NAME_____ imgs_____ t_____ IMGS_____ fileID_____
 
-            % figure windowå‰Šé™¤
-            close all;
-
-            % å›ç­”ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã®å®Ÿè¡Œ
+            % ‰ñ“šƒvƒƒOƒ‰ƒ€‚ÌÀs
             filename = sprintf('%s/%s_%d.m', kadai_name_____, kadai_name_____, ID_LIST_____(n_____));
-            % ãƒ•ã‚¡ã‚¤ãƒ«å­˜åœ¨ç¢ºèª
+            % ƒtƒ@ƒCƒ‹‘¶İŠm”F
             if exist(filename, 'file')
-                % å›ç­”ã‚¹ã‚¯ãƒªãƒ—ãƒˆå®Ÿè¡Œ
+                % ‰ñ“šƒXƒNƒŠƒvƒgÀs
                 try
                     run(filename);
                 catch ME
-                    ME
-                    % å›ç­”ã‚¹ã‚¯ãƒªãƒ—ãƒˆå®Ÿè¡Œæ™‚ã‚¨ãƒ©ãƒ¼
+                    fprintf(fileID_____, 'filename\t%s\ntype\tINTERNAL_ERROR(-501)\nmessage\t%s\n----------\n', filename, ME.message);
+                    % ‰ñ“šƒXƒNƒŠƒvƒgÀsƒGƒ‰[
                     evaluation_____(n_____, k_____) = INTERNAL_ERROR_____;
                 end
 
-                % result(å›ç­”)å¤‰æ•°å­˜åœ¨ãƒã‚§ãƒƒã‚¯
+                % result(‰ñ“š)•Ï”‘¶İƒ`ƒFƒbƒN
                 if exist('result', 'var')
-                    % æ¯”è¼ƒ(è©•ä¾¡) -> é–¢æ•°(eval{k}.må†…ã«è¨˜è¿°ã™ã‚‹)ã‚’ç”¨æ„ã™ã‚‹
+                    % ”äŠr(•]‰¿) -> ŠÖ”(eval{k}.m“à‚É‹Lq‚·‚é)‚ğ—pˆÓ‚·‚é
                     try
                         if evaluation_____(n_____, k_____) < 0
-                            % ErrorValueã‚’ä¿æŒ
+                            % ErrorValue‚ğ•Û
                         else
                             e = eval( sprintf('eval%d(answer_____, result);', k_____));
-                            % TODO: è¤‡æ•°ãƒ†ã‚¹ãƒˆç”»åƒã®è©•ä¾¡ã®æ‰±ã„
-                            % ç¾çŠ¶: åŠ ç®—(å¹³å‡ã—ãŸæ–¹ãŒè‰¯ã„?)
+                            % TODO: •¡”ƒeƒXƒg‰æ‘œ‚Ì•]‰¿‚Ìˆµ‚¢
+                            % Œ»ó: ‰ÁZ(•½‹Ï‚µ‚½•û‚ª—Ç‚¢?)
                             evaluation_____(n_____, k_____) = evaluation_____(n_____, k_____) + e;
                         end
                     catch ME
-                        ME
-                        % evaluateé–¢æ•°å†…ã®ã‚¨ãƒ©ãƒ¼
+                        fprintf(fileID_____, 'filename\t%s\ntype\tEVALUATION_ERROR(-600)\nmessage\t%s\n----------\n', filename, ME.message);
+                        % evaluateŠÖ”“à‚ÌƒGƒ‰[
                         evaluation_____(n_____, k_____) = EVALUATE_ERROR_____;
                     end
                 else
-                    % result(å›ç­”)å¤‰æ•°ãŒå­˜åœ¨ã—ãªã„
+                    % result(‰ñ“š)•Ï”‚ª‘¶İ‚µ‚È‚¢
                     evaluation_____(n_____, k_____) = INTERNAL_ERROR_____-1;
                 end
             else
-                % ã‚¹ã‚¯ãƒªãƒ—ãƒˆãŒå­˜åœ¨ã—ãªã„
+                % ƒXƒNƒŠƒvƒg‚ª‘¶İ‚µ‚È‚¢
                 evaluation_____(n_____, k_____) = NOT_FOUND_____;
             end
         end
