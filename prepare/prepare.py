@@ -84,7 +84,7 @@ if __name__ == '__main__':
                         continue
                     imread = "imread('{}')".format(INPUT_IMG_NAME)
                     if "imread" in line and imread not in line:
-                        line = re.sub(r"imread\('.+'\)", imread, line)
+                        line = re.sub(r"imread\(.+\)", imread, line)
                         print("[Load file name is invalid (fixed)] {}".format(filename))
                     # TODO: result (only check)
                     if 'result' in line:
